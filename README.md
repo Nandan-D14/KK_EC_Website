@@ -19,19 +19,6 @@ A **full-stack website** built for the **PESU Kannada Kutta EC Club**, showcasin
 
 ---
 
-## 📂 Project Structure  
-
-├── src/ # 🎨 Frontend React source code
-├── public/ # 📁 Static assets (images, icons, etc.)
-├── backend/ # ⚙️ Node.js/Express backend API
-│ ├── routes/ # 🌐 API routes
-│ ├── server.js # 🚀 Main server file
-│ └── package.json # 📦 Backend dependencies
-├── package.json # 📦 Frontend dependencies
-└── README.md # 📖 Documentation
-
----
-
 ## 🚀 Getting Started  
 
 ### 🖥️ Frontend  

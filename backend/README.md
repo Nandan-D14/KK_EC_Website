@@ -1,6 +1,6 @@
-# Kannada Rajyotsava Backend
+# Kannada Kutta EC Backend
 
-Backend API for the PESU Kannada Kutta Rajyotsava website.
+Backend API for the PESU Kannada Kutta EC website.
 
 ## Features
 

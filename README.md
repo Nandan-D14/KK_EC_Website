@@ -2,8 +2,7 @@
 
 A full-stack website developed for **PESU Kannada Kutta's Rajyotsava celebrations**.  
 This project showcases Kannada culture, events, and activities in a digital space.
----
-## Front-End
+
 ---
 
 ## 📂 Project Structure
@@ -19,6 +18,12 @@ This project showcases Kannada culture, events, and activities in a digital spac
 └── README.md         # This file
 ```
 
+### Frontend Development
+
+```bash
+npm install
+npm run dev
+```
 
 ---
 

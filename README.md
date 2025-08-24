@@ -6,13 +6,16 @@ A **full-stack website** built for the **PESU Kannada Kutta EC Club**, showcasin
 
 ## 📌 Tech Stack  
 
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)  
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)  
-![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)  
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)  
-![shadcn-ui](https://img.shields.io/badge/shadcn--ui-black?style=for-the-badge)  
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)  
-![Express](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)  
+<p align="center">
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/shadcn--ui-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+  <img src="https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white" />
+</p>
+
 
 ---
 
@@ -33,40 +36,34 @@ A **full-stack website** built for the **PESU Kannada Kutta EC Club**, showcasin
 
 ### 🖥️ Frontend  
 
-```bash
+# bash
 npm install
 npm run dev
-✨ Features
+
+---
+##✨ Features
 
 🎨 Frontend: Modern React + Tailwind + shadcn-ui
-
 ⚙️ Backend: RESTful API powered by Express.js
-
 📅 Events Management: Showcase Kannada Kutta EC Club events
-
 👥 Team Showcase: Year-wise EC team members
-
 💰 UPI Payments: Support & donations integration
-
 🏵️ Cultural UI: Inspired by Kannada heritage
 
-🌐 API Endpoints
+---
+##🌐 API Endpoints
 Endpoint	Description
 /api/events	📅 Manage & fetch events
 /api/team	👥 Manage EC team members
 /api/payments	💰 Handle UPI donations
 /api/health	✅ Server health check
 
-🎯 Purpose
-
+---
+##🎯 Purpose
 The Kannada Kutta EC Website is a digital hub to:
-
 Preserve & promote Kannada culture 🏵️
-
 Showcase club events & activities 📅
-
 Highlight EC team & contributors 👥
-
 Enable community support & donations 💰
-
 Create a platform for cultural pride 💛❤️
+---

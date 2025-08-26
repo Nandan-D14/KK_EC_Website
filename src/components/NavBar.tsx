@@ -1,129 +1,138 @@
-
-import { Menu, X, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
+import { Menu, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+} from "@/components/ui/sheet";
+import { Link, useLocation } from "react-router-dom";
 
 function NavBar() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'Team', href: '#team' },
-    { name: 'Events', href: '#events' },
-    { name: 'About Us', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: "Home", href: "/", hash: "home" },
+    { name: "Team", href: "/team" },
+    { name: "Events", href: "/events" },
+    { name: "Gallery", href: "/gallery" },
+    { name: "Blog", href: "/blogs" },
+    { name: "About", href: "/", hash: "about" },
+    { name: "Contact", href: "/", hash: "contact" },
   ];
 
-  const contributors = Array.from({ length: 6 }, (_, i) => i + 1);
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (item: { href: string; hash?: string }) => {
+    if (item.hash && item.href === location.pathname) {
+      const element = document.querySelector(`#${item.hash}`);
+      element?.scrollIntoView({ behavior: "smooth" });
     }
-    setIsMenuOpen(false);
   };
-  
+
+  const isActive = (item: { href: string; hash?: string }) => {
+    if (location.pathname === "/") {
+      return item.href === "/";
+    }
+    return item.href !== "/" && location.pathname.startsWith(item.href);
+  };
+
+  const NavLinks = ({ isMobile = false }: { isMobile?: boolean }) => (
+    <>
+      {navItems.map((item) => {
+        const navLink = (
+          <Link
+            key={item.name}
+            to={item.href}
+            onClick={() => handleNavigation(item)}
+            className={isMobile ? "w-full" : ""}
+          >
+            <Button
+              variant="ghost"
+              className={
+                isMobile
+                  ? `w-full justify-start text-black ${
+                      isActive(item) ? "bg-yellow-50" : "hover:bg-yellow-50"
+                    }`
+                  : `bg-transparent bold text-black hover:bg-transparent border-0 border-b-2 transition-colors duration-300 ${
+                      isActive(item)
+                        ? "border-yellow-500"
+                        : "border-transparent"
+                    } hover:border-yellow-500`
+              }
+            >
+              {item.name}
+            </Button>
+          </Link>
+        );
+
+        if (isMobile) {
+          return <SheetClose asChild>{navLink}</SheetClose>;
+        }
+        return navLink;
+      })}
+    </>
+  );
+
+  const JoinUsButton = ({ isMobile = false }) => (
+    <Button
+      className={`text-sm bg-yellow-400 text-muted-foreground group flex items-center ${
+        isMobile ? "w-full mt-4" : "hidden sm:flex"
+      }`}
+    >
+      Join Us
+      <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+    </Button>
+  );
+
   return (
-    <div className='sm:flex justify-center items-center align-middle sm:w-screen'>
-      <header className="fixed top-0  z-50 bg-neutral-200/70 backdrop-blur-sm border-b sm:min-w-[500px] rounded-b-2xl border-accent/20 shadow-soft">
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
-          
+    <div className="fixed top-0 left-0 right-0 z-50 md:p-4">
+      <header className="w-full max-w-screen-xl mx-auto bg-neutral-200/70 backdrop-saturate-100 backdrop-blur-md border-accent/20 shadow-lg rounded-none md:rounded-2xl border-b sm:border">
+        <div className="flex items-center justify-between p-3">
           {/* Logo Section */}
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-gradient-festival rounded-full flex items-center justify-center shadow-festival">
-              <span className="text-primary-foreground font-bold text-lg font-kannada">ಕ</span>
+              <span className="text-primary-foreground font-bold text-lg font-kannada">
+                ಕ
+              </span>
             </div>
             <div className="hidden md:block">
-              <h1 className="text-lg font-bold text-primary">ಕನ್ನಡ ಕುಟ್ಟ ಇಸಿ</h1>
-              <p className="text-sm text-muted-foreground">PESU Kannada Kutta EC Campus</p>
+              <h1 className="text-lg font-bold text-primary">
+                ಕನ್ನಡ ಕುಟ್ಟ ಇಸಿ
+              </h1>
             </div>
           </div>
 
           {/* Navigation - Desktop */}
           <nav className="hidden md:flex items-center space-x-1">
-            {navItems.map((item) => (
-              <Button
-                key={item.name}
-                className="btn-cultural bg-transparent hover:bg-accent/0 text-primary border-0 border-b-2 border-transparent hover:border-secondary rounded-xl"
-                onClick={() => scrollToSection(item.href)}
-              >
-                {item.name}
-              </Button>
-            ))}
+            <NavLinks />
           </nav>
 
-          {/* Contributors & Mobile Menu */}
-          <div className="flex items-center space-x-4  justify-end">
-            <div className="hidden sm:flex items-center space-x-1">
-              <span className="text-sm text-muted-foreground mr-2">Contributors:</span>
-              <div className="flex -space-x-1">
-                {contributors.map((_, index) => (
-                  <div
-                    key={index}
-                    className="w-8 h-8 bg-primary rounded-full border-2 border-background flex items-center justify-center shadow-sm"
-                    title={`Contributor ${index + 1}`}
-                  >
-                    <Users className="w-4 h-4 text-primary-foreground" />
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Join Button & Mobile Menu */}
+          <div className="flex items-center space-x-2">
+            <JoinUsButton />
 
             {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </Button>
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <Menu className="h-6 w-6" />
+                    <span className="sr-only">Open Menu</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right">
+                  <nav className="flex flex-col space-y-2 mt-8">
+                    <NavLinks isMobile />
+                    <JoinUsButton isMobile />
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4 border-t border-accent/20 pt-4">
-            <div className="flex flex-col space-y-2">
-              {navItems.map((item) => (
-                <Button
-                  key={item.name}
-                  variant="ghost"
-                  className="btn-cultural justify-start"
-                  onClick={() => scrollToSection(item.href)}
-                >
-                  {item.name}
-                </Button>
-              ))}
-            </div>
-            
-            {/* Mobile Contributors */}
-            <div className="mt-4 pt-4 border-t border-accent/20">
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-muted-foreground">Contributors:</span>
-                <div className="flex -space-x-1">
-                  {contributors.slice(0, 4).map((_, index) => (
-                    <div
-                      key={index}
-                      className="w-6 h-6 bg-primary rounded-full border border-background flex items-center justify-center"
-                    >
-                      <Users className="w-3 h-3 text-primary-foreground" />
-                    </div>
-                  ))}
-                  <div className="w-6 h-6 bg-muted rounded-full border border-background flex items-center justify-center">
-                    <span className="text-xs text-muted-foreground">+2</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </nav>
-        )}
-      </div>
-    </header>
+      </header>
     </div>
-  )
+  );
 }
 
-export default NavBar
+export default NavBar;
+

@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from './NavBar';
 import Footer from './Footer';
+import ChatBot from './ChatBot';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -9,6 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <main className="flex-grow ">
         {children}
       </main>
+  <ChatBot />
       <Footer />
     </div>
   );

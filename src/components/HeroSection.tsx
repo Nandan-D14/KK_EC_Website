@@ -1,137 +1,138 @@
-import { Button } from '@/components/ui/button';
-import { ChevronDown, Sun } from 'lucide-react';
-import heroBanner from '@/assets/hero-banner.jpg';
+'use client';
+
 import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Calendar, Users, MapPin, ArrowRight } from 'lucide-react';
 
-const HeroSection = () => {
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+// --- CSS Tokens and Global Styles ---
+const StyleProvider: React.FC = () => (
+  <style>{`
+    :root {
+      --kk-red: #C8102E;
+      --kk-yellow: #FFCC00;
+      --kk-maroon: #7A0A0A;
+      --bg-dark: #1a1a1a;
+      --glass: rgba(255, 255, 255, 0.08);
+      --text-on-dark: #FFFDF8;
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    setMousePosition({ x, y });
-  };
-
-  const scrollToEvents = () => {
-    const eventsSection = document.querySelector('#events');
-    if (eventsSection) {
-      eventsSection.scrollIntoView({ behavior: 'smooth' });
+      --dur-fast: 160ms;
+      --dur-med: 400ms;
+      --dur-slow: 800ms;
+      --easing-smooth: cubic-bezier(.2, .9, .3, 1);
     }
-  };
 
-  const auroraStyle = {
-    '--mouse-x': `${mousePosition.x}`,
-    '--mouse-y': `${mousePosition.y}`,
-    background:
-      'radial-gradient(circle at calc(var(--mouse-x) * 100%) calc(var(--mouse-y) * 100%), rgba(255, 215, 0, 0.3), transparent 40%),\n      radial-gradient(circle at calc(var(--mouse-x) * 100%) calc(var(--mouse-y) * 100%), rgba(255, 69, 0, 0.2), transparent 50%)',
-  } as React.CSSProperties;
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes glowMove1 { 0% { transform: translate(0, 0) scale(1); opacity: 0.6; } 33% { transform: translate(20vw, 10vh) scale(1.2); opacity: 0.8; } 66% { transform: translate(5vw, 30vh) scale(1.1); opacity: 0.7; } 100% { transform: translate(0, 0) scale(1); opacity: 0.6; } }
+    @keyframes glowMove2 { 0% { transform: translate(0, 0) scale(1); opacity: 0.7; } 40% { transform: translate(-15vw, 20vh) scale(1.1); opacity: 0.9; } 80% { transform: translate(-5vw, -10vh) scale(1.2); opacity: 0.8; } 100% { transform: translate(0, 0) scale(1); opacity: 0.7; } }
+    @keyframes glowMove3 { 0% { transform: translate(0, 0) scale(1); opacity: 0.8; } 50% { transform: translate(10vw, -20vh) scale(1.3); opacity: 1; } 100% { transform: translate(0, 0) scale(1); opacity: 0.8; } }
+    @keyframes glowMove4 { 0% { transform: translate(0, 0) scale(1); opacity: 0.7; } 30% { transform: translate(-10vw, -5vh) scale(1.1); opacity: 0.9; } 70% { transform: translate(15vw, 25vh) scale(1.2); opacity: 0.8; } 100% { transform: translate(0, 0) scale(1); opacity: 0.7; } }
+    @keyframes glowMove5 { 0% { transform: translate(0, 0) scale(1); opacity: 0.6; } 45% { transform: translate(25vw, -15vh) scale(1.3); opacity: 0.9; } 85% { transform: translate(-5vw, 10vh) scale(1.1); opacity: 0.7; } 100% { transform: translate(0, 0) scale(1); opacity: 0.6; } }
 
+    .animate-fade-in { animation: fadeIn var(--dur-slow) var(--easing-smooth) forwards; }
+    .animate-slide-in-up { animation: slideInUp var(--dur-med) var(--easing-smooth) forwards; }
+    .animate-glow-1 { animation: glowMove1 20s infinite ease-in-out; }
+    .animate-glow-2 { animation: glowMove2 25s infinite ease-in-out; }
+    .animate-glow-3 { animation: glowMove3 30s infinite ease-in-out; }
+    .animate-glow-4 { animation: glowMove4 22s infinite ease-in-out; }
+    .animate-glow-5 { animation: glowMove5 28s infinite ease-in-out; }
+
+    .animation-delay-1 { animation-delay: 100ms; }
+    .animation-delay-2 { animation-delay: 200ms; }
+    .animation-delay-3 { animation-delay: 300ms; }
+    .animation-delay-4 { animation-delay: 400ms; }
+    .animation-delay-5 { animation-delay: 500ms; }
+    .animation-delay-6 { animation-delay: 600ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-slide-in-up, .animate-glow-1, .animate-glow-2, .animate-glow-3, .animate-glow-4, .animate-glow-5 {
+        animation: fadeIn 600ms ease-out forwards;
+      }
+    }
+  `}</style>
+);
+
+// --- Sub-Components ---
+
+const DynamicBackground: React.FC = () => (
+  <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+    <div className="absolute inset-0 bg-[var(--bg-dark)]" />
+    {/* Animated Glowing Orbs - Increased quantity and size */}
+    <div className="absolute inset-0">
+      <div className="absolute left-[10%] top-[20%] h-80 w-80 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-1" />
+      <div className="absolute left-[70%] top-[50%] h-96 w-96 rounded-full bg-[var(--kk-yellow)] opacity-30 blur-3xl animate-glow-2" />
+      <div className="absolute left-[30%] top-[80%] h-80 w-80 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-3" />
+      <div className="absolute left-[50%] top-[10%] h-72 w-72 rounded-full bg-[var(--kk-yellow)] opacity-30 blur-3xl animate-glow-4 animation-delay-2" />
+      <div className="absolute left-[0%] top-[50%] h-80 w-80 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-5 animation-delay-3" />
+      <div className="absolute left-[80%] top-[0%] h-64 w-64 rounded-full bg-[var(--kk-yellow)] opacity-30 blur-3xl animate-glow-1 animation-delay-4" />
+      <div className="absolute left-[20%] top-[0%] h-72 w-72 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-2 animation-delay-5" />
+    </div>
+  </div>
+);
+
+const AbstractIllustration: React.FC = () => (
+  <div className="relative flex h-full w-full items-center justify-center">
+    <div className="absolute h-48 w-48 rounded-full bg-[var(--kk-red)] opacity-20 blur-3xl" />
+    <div className="absolute h-32 w-32 rounded-full bg-[var(--kk-yellow)] opacity-20 blur-3xl" />
+    <div className="relative h-40 w-40 rounded-full border-2 border-white/10 bg-[var(--glass)] backdrop-blur-lg flex items-center justify-center">
+      <span className="font-kannada text-6xl text-white">ಕ</span>
+    </div>
+  </div>
+);
+
+const MicroCard: React.FC<{ icon: React.ReactNode; text: string; className?: string; }> = ({ icon, text, className }) => (
+  <div className={`flex items-center gap-3 rounded-lg border border-white/10 bg-[var(--glass)] px-4 py-2 backdrop-blur-lg text-white ${className}`}>
+    {icon}
+    <span className="text-sm">{text}</span>
+  </div>
+);
+
+// --- Main Hero Section Component ---
+
+const HeroSection: React.FC = () => {
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden group"
-      onMouseMove={handleMouseMove}
-    >
-      {/* Background Image */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src={heroBanner}
-          alt="Kannada Rajyotsava Cultural Banner"
-          className="w-full h-full object-cover scale-105 transition-transform duration-500 group-hover:scale-100"
-        />
-      </div>
+    <>
+      <StyleProvider />
+      <section
+        id="home"
+        className="sticky h-screen w-full overflow-hidden text-[var(--text-on-dark)]"
+        aria-label="Kannada Koota Hero Section"
+      >
+        <DynamicBackground />
 
-      {/* Dynamic Aurora Overlay */}
-      <div
-        className="absolute inset-0 z-1 transition-all duration-500 ease-out"
-        style={auroraStyle}
-      ></div>
-
-      {/* Static Vignette Overlay */}
-      <div className="absolute inset-0 z-2 bg-black/40"></div>
-
-      {/* Hero Content */}
-      <div className="relative z-10 text-center px-4 py-20">
-        <div className="max-w-4xl mx-auto">
-          {/* Main Heading */}
-          <h1
-            className="text-5xl sm:text-6xl md:text-7xl font-kannada mb-6 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-red-500 drop-shadow-lg animate-fade-in-up"
-            style={{ animationDelay: '100ms' }}
-          >
-            ಜೈ ಕರ್ನಾಟಕ ಮಾತೆ
-          </h1>
-
-          {/* Subtitle */}
-          <p
-            className="text-xl md:text-2xl text-white/90 mb-4 font-medium drop-shadow-md animate-fade-in-up"
-            style={{ animationDelay: '300ms' }}
-          >
-            Celebrating Karnataka's Rich Heritage & Culture
-          </p>
-
-          <p
-            className="text-lg text-white/80 mb-8 max-w-2xl mx-auto animate-fade-in-up"
-            style={{ animationDelay: '500ms' }}
-          >
-            Join PESU Kannada Kutta in honoring our beautiful Karnataka through
-            cultural events, team contributions, and unforgettable celebrations.
-          </p>
-
-          {/* CTA Buttons */}
-          <div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in-up"
-            style={{ animationDelay: '700ms' }}
-          >
-            <Button
-              className="relative overflow-hidden bg-gradient-to-r from-yellow-500 to-red-600 text-white font-bold text-lg px-8 py-6 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl group/btn"
-              onClick={scrollToEvents}
+        {/* Main Grid Layout */}
+        <div className="relative z-10 grid h-full grid-cols-1 items-center gap-8 px-4 py-16 md:grid-cols-2 md:px-16 lg:px-24">
+          
+          {/* Left Column: Text Content & CTAs */}
+          <div className="flex flex-col items-start justify-center md:col-span-1">
+            <p className="font-mono text-sm uppercase tracking-widest text-slate-300 animate-slide-in-up animation-delay-1">Connect • Celebrate • Create</p>
+            <h1 
+              className="mt-4 text-5xl font-bold leading-tight text-white md:text-6xl lg:text-7xl animate-slide-in-up animation-delay-2"
+              aria-label="ಕನ್ನಡಕ್ಕೂಟ — ನಮ್ಮ ಭಾಷೆ, ನಮ್ಮ ಸಂಸ್ಕೃತಿ"
             >
-              <span className="absolute inset-0 bg-black/20 group-hover/btn:bg-black/10 transition-colors duration-300"></span>
-              <span className="relative">Explore Events</span>
-              <span className="absolute top-0 left-0 w-full h-full bg-white/10 transform -translate-x-full group-hover/btn:translate-x-full transition-transform duration-500 ease-in-out"></span>
-            </Button>
-            <Button
-              variant="outline"
-              className="text-lg px-8 py-6 bg-black/20 border-white/30 text-white hover:bg-white hover:text-black transition-all duration-300 hover:scale-105"
-            >
-              Join Our Team
-            </Button>
+              ಕನ್ನಡಕ್ಕೂಟ — <br /> ನಮ್ಮ ಭಾಷೆ, ನಮ್ಮ ಸಂಸ್ಕೃತಿ
+            </h1>
+            <p className="mt-6 max-w-xl text-lg text-slate-300 animate-slide-in-up animation-delay-3">A creative community for Kannada speakers — events, workshops and cultural celebrations.</p>
+            
+            <div className="mt-8 flex flex-wrap items-center gap-4 animate-slide-in-up animation-delay-4">
+              <Button size="lg" className="rounded-full bg-[var(--kk-red)] px-8 py-6 text-lg font-bold text-[var(--kk-yellow)] transition-transform hover:scale-105 focus-visible:ring-2 focus-visible:ring-[var(--kk-yellow)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-dark)]">ಸೇರಿರಿ / Join</Button>
+              <Button size="lg" variant="outline" className="rounded-full border-[var(--kk-yellow)] px-8 py-6 text-lg font-bold text-[var(--kk-yellow)] transition-colors hover:bg-[var(--kk-yellow)] hover:text-[var(--bg-dark)] focus-visible:ring-2 focus-visible:ring-[var(--kk-yellow)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-dark)]">ಇವೆಂಟ್‌ಗಳು ನೋಡಿ</Button>
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-4 animate-slide-in-up animation-delay-5">
+                <MicroCard icon={<Calendar className="h-5 w-5 text-slate-300"/>} text="Upcoming: Rajyotsava" />
+                <MicroCard icon={<Users className="h-5 w-5 text-slate-300"/>} text="150+ Members" />
+                <MicroCard icon={<MapPin className="h-5 w-5 text-slate-300"/>} text="Bengaluru Chapter" />
+            </div>
           </div>
 
-          {/* Glassmorphism Stats */}
-          <div
-            className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto animate-fade-in-up"
-            style={{ animationDelay: '900ms' }}
-          >
-            <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-              <h3 className="text-3xl font-bold text-white">15+</h3>
-              <p className="text-sm text-white/70">Cultural Events</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-              <h3 className="text-3xl font-bold text-white">100+</h3>
-              <p className="text-sm text-white/70">Team Members</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 border border-white/20 shadow-lg">
-              <h3 className="text-3xl font-bold text-white">5</h3>
-              <p className="text-sm text-white/70">Years Celebrating</p>
-            </div>
+          {/* Right Column: Abstract Illustration */}
+          <div className="hidden h-full w-full items-center justify-center md:flex md:col-span-1 animate-slide-in-up animation-delay-6">
+            <AbstractIllustration />
           </div>
         </div>
-      </div>
-
-      {/* Symbolic Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-        <button
-          onClick={scrollToEvents}
-          className="relative flex items-center justify-center bg-white/10 backdrop-blur-sm rounded-full w-16 h-16 text-white border border-white/20 group/scroll"
-          aria-label="Scroll to events section"
-        >
-          <Sun className="absolute w-8 h-8 text-yellow-300 transition-all duration-500 transform group-hover/scroll:rotate-90 group-hover/scroll:scale-125" />
-          <ChevronDown className="w-6 h-6 transition-transform duration-300 group-hover/scroll:translate-y-1 animate-bounce" />
-        </button>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

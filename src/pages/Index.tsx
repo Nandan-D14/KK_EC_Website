@@ -5,7 +5,6 @@ import TeamSection from '@/components/TeamSection';
 import VideoSection from '@/components/VideoSection';
 import UPISection from '@/components/UPISection';
 import AboutSection from '@/components/AboutSection';
-import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
@@ -19,7 +18,6 @@ const Index = () => {
         <UPISection />
         <AboutSection />
       </main>
-      <Footer />
     </div>
   );
 };

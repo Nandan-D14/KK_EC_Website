@@ -1,8 +1,20 @@
 {
   "name": "vite_react_shadcn_ts",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
+  "description": "A full-stack website developed for **PESU Kannada Kutta's Rajyotsava celebrations**.  \r This project showcases Kannada culture, events, and activities in a digital space.",
+  "homepage": "https://github.com/Nandan-D14/KK_EC_Website#readme",
+  "bugs": {
+    "url": "https://github.com/Nandan-D14/KK_EC_Website/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nandan-D14/KK_EC_Website.git"
+  },
+  "license": "ISC",
+  "author": "",
   "type": "module",
+  "main": "eslint.config.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -45,6 +57,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.6.0",
+    "framer-motion": "^12.23.12",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.3.0",

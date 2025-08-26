@@ -85,7 +85,9 @@ function NavBar() {
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 md:p-4">
+      
       <header className="w-full max-w-screen-xl mx-auto bg-neutral-200/70 backdrop-saturate-100 backdrop-blur-md border-accent/20 shadow-lg rounded-none md:rounded-2xl border-b sm:border">
+        
         <div className="flex items-center justify-between p-3">
           {/* Logo Section */}
           <div className="flex items-center space-x-3">

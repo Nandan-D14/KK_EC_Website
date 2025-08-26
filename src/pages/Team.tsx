@@ -1,4 +1,5 @@
 
+"use client";
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -146,28 +147,46 @@ type Member = (typeof members)[0];
 const TeamPage = () => {
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
 
+  // Helper to ensure image URLs are valid and provide fallback
+  const safeImage = (url?: string) => {
+    if (!url) return "https://placehold.co/200x200/cccccc/333333?text=No+Image";
+    try {
+      // Basic check - invalid urls will throw
+      new URL(url);
+      return url;
+    } catch (e) {
+      return "https://placehold.co/200x200/cccccc/333333?text=No+Image";
+    }
+  };
+
+  const [query, setQuery] = useState("");
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+
   const clubHead = members.find((m) => m.role === "Club Head");
   const viceHead = members.find((m) => m.role === "Club Vice Head");
-  const teamMembers = members.filter(
-    (m) => m.role !== "Club Head" && m.role !== "Club Vice Head"
-  );
+  const teamMembers = members
+    .filter((m) => m.role !== "Club Head" && m.role !== "Club Vice Head")
+    .filter((m) =>
+      `${m.name} ${m.role} ${m.domain}`.toLowerCase().includes(query.toLowerCase())
+    );
 
   const renderMemberCard = (member: Member, className: string = "") => (
     <DialogTrigger asChild key={member.id}>
       <Card
-        className={`cursor-pointer hover:shadow-lg transition-shadow ${className}`}
+        className={`cursor-pointer transition-shadow hover:shadow-md p-3 text-center ${className}`}
         onClick={() => setSelectedMember(member)}
+        aria-label={`Open details for ${member.name}`}
       >
-        <CardHeader>
-          <Avatar className="w-24 h-24 mx-auto">
-            <AvatarImage src={member.pic} alt={member.name} />
+        <CardHeader className="p-0">
+          <Avatar className="w-16 h-16 mx-auto">
+            <AvatarImage src={safeImage(member.pic)} alt={member.name} />
             <AvatarFallback>{member.name.substring(0, 2)}</AvatarFallback>
           </Avatar>
         </CardHeader>
-        <CardContent className="text-center">
-          <CardTitle>{member.name}</CardTitle>
-          <p className="text-muted-foreground">{member.role}</p>
-          <p className="text-sm text-gray-500">{member.domain}</p>
+        <CardContent className="p-2">
+          <CardTitle className="text-sm truncate">{member.name}</CardTitle>
+          <p className="text-xs text-muted-foreground truncate">{member.role}</p>
+          <p className="text-[11px] text-gray-500 truncate">{member.domain}</p>
         </CardContent>
       </Card>
     </DialogTrigger>
@@ -176,7 +195,18 @@ const TeamPage = () => {
   return (
     <Dialog>
       <div className="container mx-auto p-4">
-        <h1 className="text-4xl font-bold text-center mb-8">Our Team</h1>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+          <h1 className="text-4xl font-bold">Our Team</h1>
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <input
+              aria-label="Search team members"
+              placeholder="Search members by name, role..."
+              className="input input-sm w-full md:w-72 px-3 py-2 rounded-md border"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+        </div>
 
         <Tabs defaultValue="current">
           <TabsList className="grid w-full grid-cols-2">
@@ -184,33 +214,54 @@ const TeamPage = () => {
             <TabsTrigger value="previous">Previous Years</TabsTrigger>
           </TabsList>
           <TabsContent value="current">
-            {/* Top Row: Head, Vice Head */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
-              {clubHead && renderMemberCard(clubHead, "md:col-span-1")}
-              <div className="space-y-8">
-                {viceHead && renderMemberCard(viceHead)}
+              {/* Top Row: Head, Vice Head (highlighted) */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-6 items-start">
+                {clubHead && (
+                  <div className="md:col-span-1">
+                    {renderMemberCard(clubHead, "bg-yellow-50")}
+                  </div>
+                )}
+                <div className="md:col-span-2 grid grid-cols-2 gap-4">
+                  {viceHead && renderMemberCard(viceHead)}
+                  {/* Small summary card or placeholder for spacing */}
+                  <div />
+                </div>
               </div>
-            </div>
 
-            {/* Domain Heads and Members */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {teamMembers.map((member) => renderMemberCard(member))}
-            </div>
+              {/* Domain Heads and Members - dense grid to fit many members */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+                {teamMembers.map((member) => renderMemberCard(member))}
+              </div>
           </TabsContent>
           <TabsContent value="previous">
+            <div className="flex items-center justify-between gap-4 mb-4">
+              <label className="text-sm">Jump to year:</label>
+              <select
+                value={selectedYear ?? ""}
+                onChange={(e) => setSelectedYear(e.target.value || null)}
+                className="border rounded-md p-2 text-sm"
+              >
+                <option value="">All</option>
+                {previousYears.map((y) => (
+                  <option key={y.year} value={y.year}>
+                    {y.year}
+                  </option>
+                ))}
+              </select>
+            </div>
             <Accordion type="single" collapsible className="w-full mt-8">
-              {previousYears.map((yearData) => (
-                <AccordionItem value={yearData.year} key={yearData.year}>
-                  <AccordionTrigger>{yearData.year}</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                      {yearData.members.map((member) =>
-                        renderMemberCard(member)
-                      )}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
+              {previousYears
+                .filter((y) => (selectedYear ? y.year === selectedYear : true))
+                .map((yearData) => (
+                  <AccordionItem value={yearData.year} key={yearData.year}>
+                    <AccordionTrigger>{yearData.year}</AccordionTrigger>
+                    <AccordionContent>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-3">
+                        {yearData.members.map((member) => renderMemberCard(member))}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
             </Accordion>
           </TabsContent>
         </Tabs>
@@ -223,10 +274,8 @@ const TeamPage = () => {
           </DialogHeader>
           <div className="flex flex-col md:flex-row gap-8">
             <Avatar className="w-48 h-48 mx-auto md:mx-0">
-              <AvatarImage src={selectedMember.pic} alt={selectedMember.name} />
-              <AvatarFallback>
-                {selectedMember.name.substring(0, 2)}
-              </AvatarFallback>
+              <AvatarImage src={safeImage(selectedMember.pic)} alt={selectedMember.name} />
+              <AvatarFallback>{selectedMember.name.substring(0, 2)}</AvatarFallback>
             </Avatar>
             <div className="space-y-4">
               <div>

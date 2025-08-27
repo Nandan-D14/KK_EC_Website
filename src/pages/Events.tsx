@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { events as staticEvents, Event } from '../lib/events-data';
 import { Card, CardContent } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '../components/ui/dialog';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '../components/ui/carousel';
 import Autoplay from "embla-carousel-autoplay";
 import { Skeleton } from '../components/ui/skeleton';
@@ -111,20 +113,23 @@ const HeroCarousel: React.FC<{ events: Event[] }> = ({ events }) => {
 
 const CurrentEventsGrid: React.FC<{ events: Event[] }> = ({ events }) => {
   if (events.length === 0) return null;
+  const navigate = useNavigate();
 
   return (
     <section className="py-16" aria-labelledby="current-events-heading">
       <h2 id="current-events-heading" className="text-3xl font-bold text-center mb-8">Happening Now</h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {events.map(event => (
-          <Card key={event.id} className="flex flex-col">
-            <CardContent className="p-6">
-              <Badge className="mb-2">Live</Badge>
-              <h3 className="text-xl font-bold mb-2">{event.title}</h3>
-              <p className="text-sm text-gray-600 mb-4">Ends <CountdownTimer to={event.endDate} /></p>
-              <Button className="w-full mt-auto"><Users className="mr-2 h-4 w-4"/>Join Now</Button>
-            </CardContent>
-          </Card>
+          <div key={event.id} onClick={() => navigate(`/events/${event.id}`)}>
+            <Card className="flex flex-col cursor-pointer hover:shadow-lg transition-shadow">
+              <CardContent className="p-6">
+                <Badge className="mb-2">Live</Badge>
+                <h3 className="text-xl font-bold mb-2">{event.title}</h3>
+                <p className="text-sm text-gray-600 mb-4">Ends <CountdownTimer to={event.endDate} /></p>
+                <Button className="w-full mt-auto"><Users className="mr-2 h-4 w-4"/>View Details</Button>
+              </CardContent>
+            </Card>
+          </div>
         ))}
       </div>
     </section>
@@ -132,18 +137,20 @@ const CurrentEventsGrid: React.FC<{ events: Event[] }> = ({ events }) => {
 };
 
 const PastEventCard: React.FC<{ event: Event }> = ({ event }) => (
-    <Card className="flex flex-col">
-        <CardContent className="p-6">
-            <h3 className="font-bold text-lg mb-2">{event.title}</h3>
-            <p className="text-sm text-gray-500 mb-3">{format(event.startDate, 'PPP')}</p>
-            <p className="text-sm text-gray-700 mb-4 flex-grow">{event.recap?.summary}</p>
-            <div className="flex items-center flex-wrap gap-2 mt-auto">
-                {event.recap?.galleryUrl && <Button size="sm" variant="outline"><ImageIcon className="mr-2 h-4 w-4"/>Gallery</Button>}
-                {event.recap?.presentationUrl && <Button size="sm" variant="outline"><Download className="mr-2 h-4 w-4"/>Slides</Button>}
-                {event.recap?.attendeeCount && <Badge variant="secondary"><Users className="mr-2 h-4 w-4"/>{event.recap.attendeeCount} Attendees</Badge>}
-            </div>
-        </CardContent>
+    <a href={`/events/${event.id}`}>
+    <Card className="flex flex-col cursor-pointer hover:shadow-lg transition-shadow">
+      <CardContent className="p-6">
+        <h3 className="font-bold text-lg mb-2">{event.title}</h3>
+        <p className="text-sm text-gray-500 mb-3">{format(event.startDate, 'PPP')}</p>
+        <p className="text-sm text-gray-700 mb-4 flex-grow">{event.recap?.summary}</p>
+        <div className="flex items-center flex-wrap gap-2 mt-auto">
+          {event.recap?.galleryUrl && <Button size="sm" variant="outline"><ImageIcon className="mr-2 h-4 w-4"/>Gallery</Button>}
+          {event.recap?.presentationUrl && <Button size="sm" variant="outline"><Download className="mr-2 h-4 w-4"/>Slides</Button>}
+          {event.recap?.attendeeCount && <Badge variant="secondary"><Users className="mr-2 h-4 w-4"/>{event.recap.attendeeCount} Attendees</Badge>}
+        </div>
+      </CardContent>
     </Card>
+  </a>
 );
 
 const PastEventsArchive: React.FC<{ events: Event[] }> = ({ events }) => {
@@ -190,6 +197,11 @@ const LoadingSkeleton: React.FC = () => (
 const EventsPage: React.FC = () => {
   const [events, setEvents] = useState<CategorizedEvents | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const [regName, setRegName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regLoading, setRegLoading] = useState(false);
+  const [regMsg, setRegMsg] = useState<string | null>(null);
 
   useEffect(() => {
     // Simulate API call
@@ -203,8 +215,19 @@ const EventsPage: React.FC = () => {
       setIsLoading(false);
     };
 
-    const timer = setTimeout(fetchEvents, 1500); // Simulate network delay
+    const timer = setTimeout(fetchEvents, 1500); 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Listen for global event to open event dialog (dispatched from cards)
+  useEffect(() => {
+    const handler = (e: Event | CustomEvent) => {
+      const ce = e as CustomEvent;
+      const detail = ce?.detail as Event | undefined;
+      if (detail) setSelectedEvent(detail);
+    };
+    window.addEventListener('openEventDialog', handler as EventListener);
+    return () => window.removeEventListener('openEventDialog', handler as EventListener);
   }, []);
 
   if (isLoading) {
@@ -221,6 +244,76 @@ const EventsPage: React.FC = () => {
         <HeroCarousel events={[...events.current, ...events.upcoming]} />
         <CurrentEventsGrid events={events.current} />
         <PastEventsArchive events={events.past} />
+
+        {/* Event Detail Dialog (controlled) */}
+        {selectedEvent && (
+          <Dialog open={true} onOpenChange={(open) => { if (!open) setSelectedEvent(null); }}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>{selectedEvent.title}</DialogTitle>
+              </DialogHeader>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="md:col-span-1">
+                  <img src={selectedEvent.imageUrl} alt={selectedEvent.title} className="w-full h-64 object-cover rounded-md" />
+                  <div className="mt-4">
+                    <Badge>{selectedEvent.tags?.[0] ?? 'Event'}</Badge>
+                    <p className="mt-2 text-sm text-gray-600"><Calendar className="inline mr-2 h-4 w-4"/>{format(selectedEvent.startDate, 'PPP p')}</p>
+                    <p className="text-sm text-gray-600"><MapPin className="inline mr-2 h-4 w-4"/>{selectedEvent.location}</p>
+                  </div>
+                </div>
+                <div className="md:col-span-2">
+                  <p className="mb-4 text-gray-700">{selectedEvent.longDescription}</p>
+                  {selectedEvent.recap?.summary && (
+                    <div className="mb-4">
+                      <h4 className="font-semibold">Recap</h4>
+                      <p className="text-sm text-gray-700">{selectedEvent.recap.summary}</p>
+                    </div>
+                  )}
+
+                  {/* Live stream button for live events */}
+                  {(selectedEvent.location?.toLowerCase().includes('live') || selectedEvent.tags?.includes('Live')) && (
+                    <div className="mb-4">
+                      <a href={selectedEvent.location.includes('http') ? selectedEvent.location : '#'} target="_blank" rel="noreferrer">
+                        <Button className="mr-2"><Ticket className="mr-2 h-4 w-4"/>Watch Live</Button>
+                      </a>
+                    </div>
+                  )}
+
+                  {/* Registration form */}
+                  <div className="mb-4">
+                    <h4 className="font-semibold mb-2">Register</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <input value={regName} onChange={(e) => setRegName(e.target.value)} placeholder="Your name" className="border rounded p-2" />
+                      <input value={regEmail} onChange={(e) => setRegEmail(e.target.value)} placeholder="Email" className="border rounded p-2" />
+                    </div>
+                    <div className="mt-3">
+                      <Button onClick={async () => {
+                        if (!regName || !regEmail) { setRegMsg('Please provide name and email'); return; }
+                        setRegLoading(true); setRegMsg(null);
+                        try {
+                          const res = await fetch(`/api/events/${selectedEvent.id}/register`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ name: regName, email: regEmail }),
+                          });
+                          const data = await res.json();
+                          if (!res.ok) throw new Error(data.error || 'Registration failed');
+                          setRegMsg(data.message || 'Registered successfully');
+                        } catch (err: any) {
+                          setRegMsg(err.message || 'Registration failed');
+                        } finally { setRegLoading(false); }
+                      }} disabled={regLoading}>{regLoading ? 'Registering...' : 'Register'}</Button>
+                    </div>
+                    {regMsg && <div className="mt-2 text-sm text-green-600">{regMsg}</div>}
+                  </div>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="ghost" onClick={() => setSelectedEvent(null)}>Close</Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        )}
       </main>
     </div>
   );

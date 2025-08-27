@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { X, ArrowLeft, ArrowRight, Download, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import BlogHeroSection from "@/components/BlogHeroSection";
+import Noisebg from "@/components/ui/noise-bg";
 
 type ImageItem = {
   id: number;
@@ -13,13 +15,11 @@ type ImageItem = {
 };
 
 const Gallery: React.FC = () => {
-  // --- Dynamic sample data (use online placeholder images) ---
   const initialCount = 16;
   const cats = ["Memories", "Events", "Workshops", "Performances"];
 
   const makeItem = (i: number): ImageItem => ({
     id: i + 1,
-    // picsum provides random images by id -- size can be adjusted
     src: `https://picsum.photos/seed/kannada-${i + 1}/1200/800`,
     title: `Kannada Moment ${i + 1}`,
     date: new Date(2025, (i % 12), (i % 28) + 1).toLocaleDateString(),
@@ -80,15 +80,26 @@ const Gallery: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen pb-12">
+      
+      {/* <BlogHeroSection /> */}
       <main className="container mx-auto px-4 py-12">
-        {/* Header */}
+        <Noisebg 
+        width="w-auto"
+        height="h-auto"
+        className="shadow-none rounded-3xl flex flex-col my-10"
+        animated={false}
+        noiseOpacity={0.3}
+        grainSize={1}
+        bgColor="bg-blue-500"
+        >
+
         <header className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Gallery</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold text-neutral-200 mb-2">Gallery</h1>
+          <p className="text-lg text-green-100 max-w-2xl mx-auto">
             A curated collection of memories, events, performances and workshops. Click an image to view details and navigate the gallery.
           </p>
         </header>
-
+        </Noisebg >
         {/* Filters / Search */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           <div className="flex items-center flex-wrap gap-2">
@@ -118,7 +129,6 @@ const Gallery: React.FC = () => {
           </div>
         </div>
 
-        {/* Masonry Gallery using CSS columns */}
         <section aria-label="Gallery" className="mb-12">
           <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
             {filtered.map((img, idx) => (

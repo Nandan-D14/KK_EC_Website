@@ -110,7 +110,7 @@ const HeroSection: React.FC = () => {
               className="mt-4 text-5xl font-bold leading-tight text-white md:text-6xl lg:text-7xl animate-slide-in-up animation-delay-2"
               aria-label="ಕನ್ನಡಕ್ಕೂಟ — ನಮ್ಮ ಭಾಷೆ, ನಮ್ಮ ಸಂಸ್ಕೃತಿ"
             >
-              ಕನ್ನಡಕ್ಕೂಟ — <br /> ನಮ್ಮ ಭಾಷೆ, ನಮ್ಮ ಸಂಸ್ಕೃತಿ
+              ಕನ್ನಡ ಕೂಟ — <br /> ನಮ್ಮ ಭಾಷೆ, ನಮ್ಮ ಸಂಸ್ಕೃತಿ
             </h1>
             <p className="mt-6 max-w-xl text-lg text-slate-300 animate-slide-in-up animation-delay-3">A creative community for Kannada speakers — events, workshops and cultural celebrations.</p>
             

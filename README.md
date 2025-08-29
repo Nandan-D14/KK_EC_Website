@@ -1,4 +1,4 @@
-# 🎉 Kannada Rajyotsava Website
+# 🎉 Kannada Koota Website
 
 A full-stack website developed for **PESU Kannada Kutta's Rajyotsava celebrations**.  
 This project showcases Kannada culture, events, and activities in a digital space.

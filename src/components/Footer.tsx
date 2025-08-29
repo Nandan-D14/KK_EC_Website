@@ -14,9 +14,9 @@ import Noisebg from "./ui/noise-bg";
 const Footer = () => {
   const socialLinks = [
     { icon: Facebook, label: "Facebook", href: "#" },
-    { icon: Instagram, label: "Instagram", href: "#" },
+    { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/kannadakoota_ecc?igsh=MXM2Znh2eTBzYWw5aw==" },
     { icon: Twitter, label: "Twitter", href: "#" },
-    { icon: Youtube, label: "YouTube", href: "#" },
+    { icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@KannadaKoota" },
   ];
 
   const quickLinks = [
@@ -197,7 +197,7 @@ const Footer = () => {
               {/* Copyright */}
               <div className="text-center md:text-left">
                 <p className="text-sm text-primary-foreground/80 font-kannada">
-                  © 2025 ಕನ್ನಡ ರಾಜ್ಯೋತ್ಸವ ವೆಬ್‌ಸೈಟ್ · PESU Kannada Kutta
+                   PESU Kannada Koota
                 </p>
                 <p className="text-xs text-primary-foreground/60 mt-1">
                   Celebrating Karnataka's Heritage with Pride

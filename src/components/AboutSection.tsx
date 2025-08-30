@@ -32,10 +32,10 @@ const AboutSection = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-6 font-kannada">
-            ಪಿಇಎಸ್‌ಯು ಕನ್ನಡ ಕುಟ್ಟಾ ಬಗ್ಗೆ
+            ಪಿಇಎಸ್‌ಯು ಕನ್ನಡ ಕೂಟ ಬಗ್ಗೆ
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            About PESU Kannada Kutta - Celebrating Karnataka's Heritage
+            About PESU Kannada Koota - Celebrating Karnataka's Heritage
           </p>
         </div>
 
@@ -48,13 +48,13 @@ const AboutSection = () => {
                 <CardContent className="p-8">
                   <div className="mb-8">
                     <h3 className="text-2xl font-bold text-primary mb-6">
-                      About PESU Kannada Kutta
+                      About PESU Kannada Koota
                     </h3>
                     
                     {/* Kannada Description */}
                     <div className="font-kannada text-lg leading-relaxed text-foreground mb-6 p-6 bg-muted/30 rounded-lg">
                       <p className="mb-4">
-                        ಪಿಇಎಸ್‌ಯು ಕನ್ನಡ ಕುಟ್ಟಾ ನಮ್ಮ ಸಂಸ್ಕೃತಿ, ಭಾಷೆ ಮತ್ತು ಪರಂಪರೆಯನ್ನು ಆಚರಿಸುವ ಕುಟುಂಬವಾಗಿದೆ.
+                        ಪಿಇಎಸ್‌ಯು ಕನ್ನಡ ಕೂಟಾ ನಮ್ಮ ಸಂಸ್ಕೃತಿ, ಭಾಷೆ ಮತ್ತು ಪರಂಪರೆಯನ್ನು ಆಚರಿಸುವ ಕುಟುಂಬವಾಗಿದೆ.
                       </p>
                       <p className="mb-4">
                         ನಾವು ಕನ್ನಡ ರಾಜ್ಯೋತ್ಸವದ ಸಡಗರದಲ್ಲಿ ಎಲ್ಲರನ್ನು ಸೇರಿಸುತ್ತೇವೆ.
@@ -67,7 +67,7 @@ const AboutSection = () => {
                     {/* English Description */}
                     <div className="text-muted-foreground leading-relaxed">
                       <p className="mb-4">
-                        PESU Kannada Kutta is a vibrant cultural family that celebrates Karnataka's rich heritage, 
+                        PESU Kannada Koota is a vibrant cultural family that celebrates Karnataka's rich heritage, 
                         beautiful language, and timeless traditions. We are dedicated to preserving and promoting 
                         the essence of Karnataka culture among students and the wider community.
                       </p>

@@ -23,9 +23,24 @@ export const teams: TeamYear[] = [
   {
     year: '2024-2025',
     members: [
-      { id: 1, name: 'Aarav Sharma', role: 'Club President', imageUrl: 'https://i.pravatar.cc/150?u=1', domain: 'Club Head', about: 'Aarav is a visionary leader with a passion for technology and community building. He is dedicated to fostering an inclusive environment where members can thrive and innovate.', socialLinks: { linkedin: '#', github: '#', twitter: '#' }, joinDate: '2022-08-15', skills: ['Leadership', 'Public Speaking', 'Project Management'] },
+      { id: 1, name: 'Ganesh', role: 'Club Head', imageUrl: '', domain: 'Club Head', about: 'Aarav is a visionary leader with a passion for technology and community building. He is dedicated to fostering an inclusive environment where members can thrive and innovate.', socialLinks: { linkedin: '#', github: '#', twitter: '#' }, joinDate: '2022-08-15', skills: ['Leadership', 'Public Speaking', 'Project Management'] },
       { id: 2, name: 'Diya Patel', role: 'Vice President', imageUrl: 'https://i.pravatar.cc/150?u=2', domain: 'Vice Head', about: 'Diya is a strategic thinker and a great motivator. She excels at managing club operations and ensuring that all projects are executed smoothly and efficiently.', socialLinks: { linkedin: '#', github: '#', twitter: '#' }, joinDate: '2022-08-15', skills: ['Organization', 'Communication', 'Strategy'] },
-      { id: 3, name: 'Rohan Gupta', role: 'Technical Head', imageUrl: 'https://i.pravatar.cc/150?u=3', domain: 'Domain Head', about: 'Rohan is a tech enthusiast who loves to explore new technologies and mentor fellow students. He has a strong background in software development.', socialLinks: { linkedin: '#', github: '#', twitter: '#' }, joinDate: '2023-01-20', skills: ['React', 'Node.js', 'System Design'] },
+      { 
+  id: 3, 
+  name: 'Sharath', 
+  role: 'Technical Head', 
+  imageUrl: '/assets/images/sharath.jpg',  // <-- local image path
+  domain: 'Domain Head', 
+  about: 'Rohan is a tech enthusiast who loves to explore new technologies and mentor fellow students. He has a strong background in software development.', 
+  socialLinks: { 
+    linkedin: '#', 
+    github: '#', 
+    twitter: '#' 
+  }, 
+  joinDate: '2023-01-20', 
+  skills: ['React', 'Node.js', 'System Design'] 
+},
+
       { id: 4, name: 'Priya Singh', role: 'Design Head', imageUrl: 'https://i.pravatar.cc/150?u=4', domain: 'Domain Head', about: 'Priya has a keen eye for aesthetics and a user-centric approach to design. She leads the creative team in producing stunning visuals for all club activities.', socialLinks: { linkedin: '#', github: '#', twitter: '#' }, joinDate: '2023-01-20', skills: ['UI/UX', 'Figma', 'Branding'] },
       { id: 5, name: 'Arjun Kumar', role: 'Marketing Head', imageUrl: 'https://i.pravatar.cc/150?u=5', domain: 'Domain Head', about: 'Arjun is a marketing guru who knows how to create a buzz. He is responsible for all promotional activities and growing the club\'s reach.', socialLinks: { linkedin: '#', github: '#', twitter: '#' }, joinDate: '2023-01-20', skills: ['Digital Marketing', 'SEO', 'Content Strategy'] },
       { id: 6, name: 'Sneha Reddy', role: 'Events Head', imageUrl: 'https://i.pravatar.cc/150?u=6', domain: 'Domain Head', about: 'Sneha is an organizational powerhouse, ensuring all our events are well-planned and executed flawlessly from start to finish.', socialLinks: { linkedin: '#', github: '#', twitter: '#' }, joinDate: '2023-01-20', skills: ['Event Planning', 'Logistics', 'Public Relations'] },

@@ -12,6 +12,7 @@ import EventDetail from "./pages/EventDetail";
 import Gallery from "./pages/Gallery";
 import Team from "./pages/Team";
 import Layout from "./components/Layout"; 
+import Test from "./pages/test";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/team" element={<Team />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/events" element={<Events />} />
+            <Route path="/test" element={<Test />} />
             <Route path="/events/:id" element={<EventDetail />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -155,7 +155,7 @@ const TeamPage: React.FC = () => {
           </Tabs>
         </div>
       </section>
-      {selectedMember && <TeamMemberModal member={selectedMember} />}
+{/*       {selectedMember && <TeamMemberModal member={selectedMember} />} */}
     </Dialog>
   );
 };

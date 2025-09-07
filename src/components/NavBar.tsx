@@ -98,7 +98,7 @@ function NavBar() {
             </div>
             <div className="hidden md:block">
               <h1 className="text-lg font-bold text-primary">
-                ಕನ್ನಡ ಕುಟ್ಟ ಇಸಿ
+                ಕನ್ನಡ ಕೂಟ  ಇಸಿ
               </h1>
             </div>
           </div>

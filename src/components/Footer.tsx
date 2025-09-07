@@ -14,9 +14,9 @@ import Noisebg from "./ui/noise-bg";
 const Footer = () => {
   const socialLinks = [
     { icon: Facebook, label: "Facebook", href: "#" },
-    { icon: Instagram, label: "Instagram", href: "#" },
+    { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/kannadakoota_ecc?igsh=MXM2Znh2eTBzYWw5aw==" },
     { icon: Twitter, label: "Twitter", href: "#" },
-    { icon: Youtube, label: "YouTube", href: "#" },
+    { icon: Youtube, label: "YouTube", href: "https://www.youtube.com/@KannadaKoota" },
   ];
 
   const quickLinks = [
@@ -57,7 +57,7 @@ const Footer = () => {
               </h3>
               <div className="space-y-4">
                 <p className="text-primary-foreground/80 text-sm leading-relaxed font-kannada">
-                  ಪಿಇಎಸ್‌ಯು ಕನ್ನಡ ಕುಟ್ಟಾ ಕರ್ನಾಟಕದ ಸಂಸ್ಕೃತಿ ಮತ್ತು ಪರಂಪರೆಯನ್ನು
+                  ಪಿಇಎಸ್‌ಯು ಕನ್ನಡ ಕೂಟ ಕರ್ನಾಟಕದ ಸಂಸ್ಕೃತಿ ಮತ್ತು ಪರಂಪರೆಯನ್ನು
                   ಆಚರಿಸುವ ಸಂಘಟನೆ.
                 </p>
                 <p className="text-primary-foreground/80 text-sm leading-relaxed">
@@ -71,7 +71,7 @@ const Footer = () => {
                     </span>
                   </div>
                   <div>
-                    <h4 className="font-semibold">PESU Kannada Kutta</h4>
+                    <h4 className="font-semibold">PESU Kannada Koota</h4>
                     <p className="text-xs text-primary-foreground/60">
                       Since 2020
                     </p>
@@ -99,12 +99,6 @@ const Footer = () => {
                 >
                   Join Us
                 </a>
-                <a
-                  href="#"
-                  className="block text-primary-foreground/80 hover:text-secondary transition-colors text-sm"
-                >
-                  Volunteer
-                </a>
               </div>
             </div>
 
@@ -117,7 +111,7 @@ const Footer = () => {
                   <div>
                     <p className="text-sm font-medium">Email</p>
                     <p className="text-xs text-primary-foreground/80">
-                      kannada.kutta@pesu.pes.edu
+                      kannada.koota@pesu.pes.edu
                     </p>
                   </div>
                 </div>
@@ -126,7 +120,7 @@ const Footer = () => {
                   <div>
                     <p className="text-sm font-medium">Phone</p>
                     <p className="text-xs text-primary-foreground/80">
-                      +91 98765 43210
+                      +91 xxxxx xxxxx
                     </p>
                   </div>
                 </div>
@@ -137,7 +131,7 @@ const Footer = () => {
                     <p className="text-xs text-primary-foreground/80">
                       PES University
                       <br />
-                      100 Feet Ring Road
+                      Electronic City
                       <br />
                       Bangalore, Karnataka 560085
                     </p>
@@ -197,7 +191,7 @@ const Footer = () => {
               {/* Copyright */}
               <div className="text-center md:text-left">
                 <p className="text-sm text-primary-foreground/80 font-kannada">
-                  © 2025 ಕನ್ನಡ ರಾಜ್ಯೋತ್ಸವ ವೆಬ್‌ಸೈಟ್ · PESU Kannada Kutta
+                   PESU Kannada Koota
                 </p>
                 <p className="text-xs text-primary-foreground/60 mt-1">
                   Celebrating Karnataka's Heritage with Pride
@@ -223,7 +217,8 @@ const Footer = () => {
             {/* Final Message */}
             <div className="text-center mt-6 pt-6 border-t border-primary-foreground/10">
               <p className="text-sm font-kannada text-secondary font-semibold">
-                ಜೈ ಕರ್ನಾಟಕ ಜನನಿ! 🙏
+{/*                 ಜೈ ಕರ್ನಾಟಕ ಜನನಿ! 🙏 */}
+                © 2025 Kannada Koota. created by <a className="block text-primary-foreground/80 hover:text-white transition-colors text-sm" href="https://github.com/Nandan-D14" alt="Nandan D">Nandan D</a> & <a className="block text-primary-foreground/80 hover:text-white transition-colors text-sm" href="https://github.com/DiganthGowdaGR" alt="Sharath G R">Sharath G R</a>
               </p>
             </div>
           </div>

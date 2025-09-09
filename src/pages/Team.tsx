@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // Add custom CSS for animations
 const styles = `
@@ -106,6 +106,8 @@ const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
 // Main Component
 const TeamMemberSection: React.FC = () => {
   const [year, setYear] = useState("2025");
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const members = teamMembersByYear[year] || [];
 
@@ -146,25 +148,16 @@ const TeamMemberSection: React.FC = () => {
           </select>
         </div>
 
-                  {/* Members by Domain */}
-                  {domains.map(domain => (
-                    <div key={domain} className="mb-12">
-                      <h2 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-gray-200">{domain} Team</h2>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-                        {team.members.filter(m => m.domain === domain).map(member => (
-                          <TeamMemberCard key={member.id} member={member} onOpenModal={handleOpenModal} />
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </TabsContent>
-              )
-            })}
-          </Tabs>
+        {/* Team Members Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+          {members.map((member, index) => (
+            <div key={index} className="animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+              <TeamMemberCard member={member} />
+            </div>
+          ))}
         </div>
+      </div>
       </section>
-      {selectedMember && <TeamMemberModal member={selectedMember} />}
-    </Dialog>
   );
 };
 

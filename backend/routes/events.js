@@ -66,8 +66,15 @@ router.post('/', (req, res) => {
   const { title, date, description, year, images } = req.body;
   
   // Validation
-  if (!title || !date || !description || !year) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  if (!title || typeof title !== 'string' ||
+      !date || typeof date !== 'string' || isNaN(Date.parse(date)) ||
+      !description || typeof description !== 'string' ||
+      !year || typeof year !== 'number') {
+    return res.status(400).json({ error: 'Invalid or missing required fields' });
+  }
+
+  if (images && (!Array.isArray(images) || !images.every(i => typeof i === 'string'))) {
+    return res.status(400).json({ error: 'Invalid images format' });
   }
   
   // Mock response - replace with database insertion

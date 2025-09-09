@@ -48,5 +48,5 @@ npm run dev
 
 👨‍💻 Contributors
 
-Sharath Gowda GR
-PESU Kannada Kutta Team
+Sharath Gowda GR and Nandan D
+PESU Kannada Koota

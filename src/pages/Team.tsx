@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import LiquidChrome from './LiquidChrome';  
 import styled from 'styled-components';
 
-// Add custom CSS for animations
+
 const styles = `
   @keyframes gradient-move {
     0% {
@@ -106,7 +106,7 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-// Reusable Team Member Card Component with Magic Theme
+// Team Member Card Component with Magic Theme
 interface TeamMemberCardProps {
   member: TeamMember;
 }

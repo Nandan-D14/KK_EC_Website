@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import LiquidChrome from './LiquidChrome';  
+import styled from 'styled-components';
 
 // Add custom CSS for animations
 const styles = `
@@ -105,61 +106,116 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-// Reusable Team Member Card Component
+// Reusable Team Member Card Component with Magic Theme
 interface TeamMemberCardProps {
   member: TeamMember;
 }
 
 const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
   return (
-    <div className="relative group p-[2px] rounded-2xl overflow-hidden">
-      {/* Animated Gradient Border */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 animate-gradient-move group-hover:opacity-100 opacity-60 group-hover:blur-md transition-all duration-500"></div>
-
-      {/* Card Content */}
-      <div className="relative flex flex-col items-center text-center p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300">
-        <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4">
-          <img
-            className="w-full h-full rounded-full object-cover ring-4 ring-white dark:ring-gray-800 transition-all duration-300"
-            src={member.imageUrl}
-            alt={`Portrait of ${member.name}`}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.onerror = null;
-              target.src = `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")}`;
-            }}
-          />
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-          {member.name}
-        </h3>
-        <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-4 px-3 py-1 bg-gray-50 dark:bg-gray-800 rounded-full">
-          {member.role}
-        </p>
-        <div className="flex space-x-3">
-          <a
-            href="#"
-            className="p-2 text-gray-400 hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            aria-label={`${member.name}'s Instagram profile`}
-          >
-            <InstagramIcon />
-          </a>
-          <a
-            href="#"
-            className="p-2 text-gray-400 hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-blue-600 dark:hover:bg-blue-700 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
-            aria-label={`${member.name}'s LinkedIn profile`}
-          >
-            <LinkedInIcon />
-          </a>
+    <StyledWrapper>
+      <div className="card">
+        <div className="card-info">
+          <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4 mx-auto">
+            <img
+              className="w-full h-full rounded-full object-cover ring-4 ring-gray-900 transition-all duration-300"
+              src={member.imageUrl}
+              alt={`Portrait of ${member.name}`}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}`;
+              }}
+            />
+          </div>
+          <h3 className="text-xl font-bold text-white mb-1 transition-colors duration-300">
+            {member.name}
+          </h3>
+          <p className="text-sm font-medium text-gray-300 mb-4 px-3 py-1 bg-gray-800 rounded-full">
+            {member.role}
+          </p>
+          <div className="flex space-x-3">
+            <a
+              href="#"
+              className="p-2 text-gray-400 hover:text-white bg-gray-800 hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+              aria-label={`${member.name}'s Instagram profile`}
+            >
+              <InstagramIcon />
+            </a>
+            <a
+              href="#"
+              className="p-2 text-gray-400 hover:text-white bg-gray-800 hover:bg-blue-600 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+              aria-label={`${member.name}'s LinkedIn profile`}
+            >
+              <LinkedInIcon />
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </StyledWrapper>
   );
 };
 
+const StyledWrapper = styled.div`
+   display: flex;
+  justify-content: center;
+  gap: 2rem; /* space between cards */
+  flex-wrap: wrap; /* makes them responsive */
+
+  .card {
+    --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
+    width: 300px;
+    height: auto;
+    padding: 5px;
+    border-radius: 1rem;
+    overflow: visible;
+    background: var(--background);
+    position: relative;
+    z-index: 1;
+  }
+
+  .card::after {
+    position: absolute;
+    content: "";
+    top: 30px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    transform: scale(0.8);
+    filter: blur(25px);
+    background: var(--background);
+    transition: opacity 0.5s;
+  }
+
+  .card-info {
+    --color: #181818;
+    background: var(--color);
+    color: var(--color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 0.7rem;
+    transition: color 1s;
+  }
+
+  .card:hover::after {
+    opacity: 0;
+  }
+
+  .card:hover .card-info,
+  .card:hover .card-info h3 {
+    color: #f7ba2b;
+  }
+`;
 
 // Main Component
 const TeamMemberSection: React.FC = () => {
@@ -172,7 +228,7 @@ const TeamMemberSection: React.FC = () => {
       {/* Liquid Chrome Background */}
       <div className="absolute inset-0 z-0">
         <LiquidChrome 
-          baseColor={[0.1, 0.1, 0.3]} 
+          baseColor={[0.08, 0.08, 0.08]} 
           speed={0.15}
           amplitude={0.4}
           frequencyX={2.5}

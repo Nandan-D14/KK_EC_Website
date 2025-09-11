@@ -1,6 +1,6 @@
 // import React from "react";
 // import styled from "styled-components";
-// import { InstagramIcon, LinkedInIcon } from "./Icons"; // Assuming these are available
+// import { InstagramIcon, LinkedInIcon } from "./Icons";
 
 // interface TeamMember {
 //   name: string;

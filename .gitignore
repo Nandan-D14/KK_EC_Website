@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Ignored component/page files
+src/pages/test.tsx
+src/components/SpiralCard.tsx

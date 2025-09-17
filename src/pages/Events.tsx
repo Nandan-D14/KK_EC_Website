@@ -86,7 +86,7 @@ const HeroCarousel: React.FC<{ events: Event[] }> = ({ events }) => {
           {events.map(event => (
             <CarouselItem key={event.id}>
               <div className="relative w-full h-[60vh] rounded-lg overflow-hidden">
-                <img src={event.imageUrl} alt={event.title} className="w-full h-full object-cover" />
+                <iframe src={event.imageUrl} id={event.title} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-8 text-white">
                   <h2 className="text-4xl font-bold mb-2">{event.title}</h2>
@@ -140,6 +140,7 @@ const PastEventCard: React.FC<{ event: Event }> = ({ event }) => (
     <a href={`/events/${event.id}`}>
     <Card className="flex flex-col cursor-pointer hover:shadow-lg transition-shadow">
       <CardContent className="p-6">
+        <iframe src={event.imageUrl} id={event.title} className="w-full h-full object-cover" />
         <h3 className="font-bold text-lg mb-2">{event.title}</h3>
         <p className="text-sm text-gray-500 mb-3">{format(event.startDate, 'PPP')}</p>
         <p className="text-sm text-gray-700 mb-4 flex-grow">{event.recap?.summary}</p>

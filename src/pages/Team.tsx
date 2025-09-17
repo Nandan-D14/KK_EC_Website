@@ -1,8 +1,8 @@
 'use client'
+
 import React, { useState } from 'react';
 import LiquidChrome from './LiquidChrome';  
 import styled from 'styled-components';
-
 
 const styles = `
   @keyframes gradient-move {
@@ -220,6 +220,8 @@ const StyledWrapper = styled.div`
 // Main Component
 const TeamMemberSection: React.FC = () => {
   const [year, setYear] = useState("2025");
+  const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const members = teamMembersByYear[year] || [];
 
@@ -273,20 +275,16 @@ const TeamMemberSection: React.FC = () => {
           </select>
         </div>
 
-        {/* Team Grid */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 w-full">
+        {/* Team Members Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
           {members.map((member, index) => (
-            <div
-              key={member.name}
-              className="animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
+            <div key={index} className="animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
               <TeamMemberCard member={member} />
             </div>
           ))}
         </div>
       </div>
-    </section>
+      </section>
   );
 };
 

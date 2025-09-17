@@ -3,6 +3,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Calendar, Users, MapPin, ArrowRight } from 'lucide-react';
+import Carousel from './Carousel1';
 
 // --- CSS Tokens and Global Styles ---
 const StyleProvider: React.FC = () => (
@@ -66,17 +67,16 @@ const DynamicBackground: React.FC = () => (
       <div className="absolute left-[0%] top-[50%] h-80 w-80 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-5 animation-delay-3" />
       <div className="absolute left-[80%] top-[0%] h-64 w-64 rounded-full bg-[var(--kk-yellow)] opacity-30 blur-3xl animate-glow-1 animation-delay-4" />
       <div className="absolute left-[20%] top-[0%] h-72 w-72 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-2 animation-delay-5" />
+      <div className="absolute left-[20%] top-[20%] h-80 w-80 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-1" />
+      <div className="absolute left-[80%] top-[50%] h-46 w-46 rounded-full bg-[var(--kk-yellow)] opacity-30 blur-3xl animate-glow-2" />
+      <div className="absolute left-[40%] top-[80%] h-40 w-40 rounded-full bg-[var(--kk-red)] opacity-30 blur-3xl animate-glow-3" />
     </div>
   </div>
 );
 
 const AbstractIllustration: React.FC = () => (
   <div className="relative flex h-full w-full items-center justify-center">
-    <div className="absolute h-48 w-48 rounded-full bg-[var(--kk-red)] opacity-20 blur-3xl" />
-    <div className="absolute h-32 w-32 rounded-full bg-[var(--kk-yellow)] opacity-20 blur-3xl" />
-    <div className="relative h-40 w-40 rounded-full border-2 border-white/10 bg-[var(--glass)] backdrop-blur-lg flex items-center justify-center">
-      <span className="font-kannada text-6xl text-white">ಕ</span>
-    </div>
+    <Carousel/>
   </div>
 );
 

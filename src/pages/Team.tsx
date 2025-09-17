@@ -1,22 +1,60 @@
 'use client'
-import React, { useState, useEffect } from 'react';
 
-// Add custom CSS for animations
+import React, { useState } from 'react';
+import LiquidChrome from './LiquidChrome';  
+import styled from 'styled-components';
+
 const styles = `
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
+  @keyframes gradient-move {
+    0% {
+      background-position: 0% 50%;
     }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
     }
   }
 
-  .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
-    opacity: 0;
+  .animate-gradient-move {
+    background-size: 200% 200%;
+    animation: gradient-move 4s linear infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-20px) translateX(10px) rotate(5deg);
+    }
+    100% {
+      transform: translateY(0px) translateX(0px) rotate(0deg);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 8s ease-in-out infinite;
   }
 `;
 
@@ -68,40 +106,116 @@ const LinkedInIcon = () => (
   </svg>
 );
 
-// Reusable Team Member Card Component
+// Team Member Card Component with Magic Theme
 interface TeamMemberCardProps {
   member: TeamMember;
 }
 
 const TeamMemberCard: React.FC<TeamMemberCardProps> = ({ member }) => {
   return (
-    <div className="group flex flex-col items-center text-center p-6 bg-white dark:bg-gray-900 rounded-2xl shadow-sm hover:shadow-xl dark:shadow-gray-900/20 dark:hover:shadow-gray-900/40 transition-all duration-300 border border-gray-100 dark:border-gray-800 hover:border-gray-200 dark:hover:border-gray-700 hover:-translate-y-1">
-      <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-        <img
-          className="relative w-full h-full rounded-full object-cover ring-4 ring-white dark:ring-gray-800 group-hover:ring-gray-100 dark:group-hover:ring-gray-700 transition-all duration-300"
-          src={member.imageUrl}
-          alt={`Portrait of ${member.name}`}
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.onerror = null;
-            target.src = `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name.split(' ').map(n => n[0]).join('')}`;
-          }}
-        />
+    <StyledWrapper>
+      <div className="card">
+        <div className="card-info">
+          <div className="relative w-32 h-32 md:w-40 md:h-40 mb-4 mx-auto">
+            <img
+              className="w-full h-full rounded-full object-cover ring-4 ring-gray-900 transition-all duration-300"
+              src={member.imageUrl}
+              alt={`Portrait of ${member.name}`}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.onerror = null;
+                target.src = `https://placehold.co/200x200/E2E8F0/4A5568?text=${member.name
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")}`;
+              }}
+            />
+          </div>
+          <h3 className="text-xl font-bold text-white mb-1 transition-colors duration-300">
+            {member.name}
+          </h3>
+          <p className="text-sm font-medium text-gray-300 mb-4 px-3 py-1 bg-gray-800 rounded-full">
+            {member.role}
+          </p>
+          <div className="flex space-x-3">
+            <a
+              href="#"
+              className="p-2 text-gray-400 hover:text-white bg-gray-800 hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+              aria-label={`${member.name}'s Instagram profile`}
+            >
+              <InstagramIcon />
+            </a>
+            <a
+              href="#"
+              className="p-2 text-gray-400 hover:text-white bg-gray-800 hover:bg-blue-600 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg"
+              aria-label={`${member.name}'s LinkedIn profile`}
+            >
+              <LinkedInIcon />
+            </a>
+          </div>
+        </div>
       </div>
-      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">{member.name}</h3>
-      <p className="text-sm font-medium text-gray-600 dark:text-gray-300 mb-4 px-3 py-1 bg-gray-50 dark:bg-gray-800 rounded-full">{member.role}</p>
-      <div className="flex space-x-3">
-        <a href="#" className="p-2 text-gray-400 hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-gradient-to-br hover:from-purple-500 hover:to-pink-500 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg" aria-label={`${member.name}'s Instagram profile`}>
-          <InstagramIcon />
-        </a>
-        <a href="#" className="p-2 text-gray-400 hover:text-white bg-gray-100 dark:bg-gray-800 hover:bg-blue-600 dark:hover:bg-blue-700 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg" aria-label={`${member.name}'s LinkedIn profile`}>
-          <LinkedInIcon />
-        </a>
-      </div>
-    </div>
+    </StyledWrapper>
   );
 };
+
+const StyledWrapper = styled.div`
+   display: flex;
+  justify-content: center;
+  gap: 2rem; /* space between cards */
+  flex-wrap: wrap; /* makes them responsive */
+
+  .card {
+    --background: linear-gradient(to left, #f7ba2b 0%, #ea5358 100%);
+    width: 300px;
+    height: auto;
+    padding: 5px;
+    border-radius: 1rem;
+    overflow: visible;
+    background: var(--background);
+    position: relative;
+    z-index: 1;
+  }
+
+  .card::after {
+    position: absolute;
+    content: "";
+    top: 30px;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    transform: scale(0.8);
+    filter: blur(25px);
+    background: var(--background);
+    transition: opacity 0.5s;
+  }
+
+  .card-info {
+    --color: #181818;
+    background: var(--color);
+    color: var(--color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 0.7rem;
+    transition: color 1s;
+  }
+
+  .card:hover::after {
+    opacity: 0;
+  }
+
+  .card:hover .card-info,
+  .card:hover .card-info h3 {
+    color: #f7ba2b;
+  }
+`;
 
 // Main Component
 const TeamMemberSection: React.FC = () => {
@@ -112,11 +226,24 @@ const TeamMemberSection: React.FC = () => {
   const members = teamMembersByYear[year] || [];
 
   return (
-    <section className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 dark:from-black dark:via-gray-900 dark:to-black font-sans transition-colors overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.05)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[size:20px_20px]"></div>
+    <section className="relative font-sans transition-colors overflow-hidden">
+      {/* Liquid Chrome Background */}
+      <div className="absolute inset-0 z-0">
+        <LiquidChrome 
+          baseColor={[0.08, 0.08, 0.08]} 
+          speed={0.15}
+          amplitude={0.4}
+          frequencyX={2.5}
+          frequencyY={1.8}
+          interactive={false}
+          className="w-full h-full"
+        />
+      </div>
+      
+      {/* Semi-transparent overlay to improve text readability */}
+      {/* <div className="absolute inset-0 bg-white/70 dark:bg-black/60 z-1"></div> */}
 
-      <div className="relative w-full px-4 py-20 sm:px-6 lg:px-8 lg:py-32">
+      <div className="relative w-full px-4 py-20 sm:px-6 lg:px-8 lg:py-32 z-10">
         {/* Header Section */}
         <div className="w-full text-center mb-16">
           <div className="inline-flex items-center px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium mb-6">

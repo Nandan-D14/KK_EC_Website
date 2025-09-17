@@ -218,7 +218,7 @@ const Footer = () => {
             <div className="text-center mt-6 pt-6 border-t border-primary-foreground/10">
               <p className="text-sm font-kannada text-secondary font-semibold">
 {/*                 ಜೈ ಕರ್ನಾಟಕ ಜನನಿ! 🙏 */}
-                © 2025 Kannada Koota. created by <a className="block text-primary-foreground/80 hover:text-white transition-colors text-sm" href="https://github.com/Nandan-D14" alt="Nandan D">Nandan D</a> & <a className="block text-primary-foreground/80 hover:text-white transition-colors text-sm" href="https://github.com/DiganthGowdaGR" alt="Sharath G R">Sharath G R</a>
+                © 2025 Kannada Koota. created by <a className="block text-primary-foreground/80 hover:text-white transition-colors text-sm" href="https://github.com/DiganthGowdaGR" alt="Nandan D">Sharath Gowda GR</a> & <a className="block text-primary-foreground/80 hover:text-white transition-colors text-sm" href="https://github.com/Nandan-D14" alt="Sharath G R">Nandan D</a>
               </p>
             </div>
           </div>
